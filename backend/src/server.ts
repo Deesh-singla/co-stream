@@ -2,15 +2,9 @@ import express from "express"
 import { createServer } from "http";
 import cors from "cors";
 import uploadRouter from "./routes/uploads.js";
-import path from "path";
-import { fileURLToPath } from "url";
-import { dirname } from "path";
+import supabaseUploadRouter from "./routes/supabaseUploads.js";
 import { isProduction } from "./middleware/DevelopmentMode.js";
 import { connectDB } from "./config/db.js";
-// console.log("hello");
-
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
 
 const app = express();
@@ -20,18 +14,19 @@ const httpServer = createServer(app);
 async function start() {
     try {
         await connectDB();
-        app.use(cors());
+        app.use(cors({
+            origin: process.env.ALLOWED_ORIGIN ?? "http://localhost:3000",
+            credentials: true,
+        }));
         app.use(express.json());
-        app.get("/health", (req, res) => {
+        app.get("/health", (_req, res) => {
             res.status(200).send("ok");
         })
 
 
-        app.use("/uploads", isProduction, uploadRouter);
 
-        app.use("/dummy", (req, res) => {
-            res.json([{ id: "1", url: "https://umesyhynfwqkvfazifdz.supabase.co/storage/v1/object/public/co-stream/video-1/master.m3u8" }, { id: "2", url: "https://umesyhynfwqkvfazifdz.supabase.co/storage/v1/object/public/co-stream/video-2/master.m3u8" }])
-        })
+        app.use("/api/videos", isProduction, uploadRouter);
+        app.use("/api/videos", isProduction, supabaseUploadRouter);
 
 
         httpServer.listen(8000, () => {

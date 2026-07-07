@@ -66,7 +66,7 @@ export async function uploadVideo(req: Request, res: Response) {
             }
             const videoUrl = `http://localhost:8000/uploads/videos/${videoId}/master.m3u8`;
             console.log(videoUrl);
-            await videosModel.insertOne({ url: videoUrl });
+            await videosModel.create({ url: videoUrl });
             res.json({
                 message: "Video converted successfully",
                 videoUrl,
