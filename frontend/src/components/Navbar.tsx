@@ -37,7 +37,7 @@ const Navbar = () => {
                                 <Upload size={15} />
                                 Upload
                             </Link>
-                            <span className="text-sm text-gray-500 max-w-[120px] truncate">
+                            <span className="text-sm text-gray-500 max-w-30 truncate">
                                 {username}
                             </span>
                             <button
