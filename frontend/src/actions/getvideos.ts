@@ -26,11 +26,16 @@ export const getVideos = async () => {
 export const getVideoById = async (id: string) => {
     try {
         await connectDB();
-        const video = await VideoModel.findById(id);
-        return video;
+        const video = await VideoModel.findById(id).lean();
+        if (!video) return null;
+        return {
+            _id: String(video._id),
+            url: String(video.url),
+            title: String(video.title),
+            image: String(video.image),
+        };
     } catch (err) {
         console.log(err);
-        return "";
+        return null;
     }
-
 }

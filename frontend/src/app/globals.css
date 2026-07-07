@@ -1,1 +1,23 @@
 @import "tailwindcss";
+
+:root {
+    --orange: #f97316;
+    --orange-dark: #ea6c0a;
+    --orange-light: #fff7ed;
+}
+
+html, body {
+    background-color: #ffffff;
+    color: #111827;
+    min-height: 100%;
+}
+
+::selection {
+    background-color: #fed7aa;
+    color: #111827;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #f3f4f6; }
+::-webkit-scrollbar-thumb { background: #f97316; border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: #ea6c0a; }
